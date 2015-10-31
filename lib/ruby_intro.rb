@@ -26,7 +26,6 @@ def sum_to_n? arr, n
   return false if arr.size == 1
 
   result = false
-
   arr.each_slice(2).each { |x|
     result = x.inject { |v, y|  v + y} == n
     break if result
@@ -42,39 +41,52 @@ def hello(name)
 end
 
 def starts_with_consonant? s
-
-  result = !!(s.downcase =~ /\A[aeiou]/)
-  return !result
+  return false if s.nil? | s.empty?
+  #return false if !!(s =~ /(?:\d*)?\d+/)
+  #return false if !!(s =~/[a-zA-Z]+/)
+  return false if !!(s =~/[\[\]\^\$\.\|\?\*\+\(\)\\~`\!@#%&\-_+={}'""<>:;, ]{1,}/)
+  return false if !(!!(s =~/[a-zA-Z]+/))
+  return !(!!(s.downcase =~ /\A[aeiou]/))
+  
 
 
 end
 
-def binary_multiple_of_4?(s)
-    s[/\A[01]+\Z/]  && (s.to_i(2)%4==0) ? true : false
+def binary_multiple_of_4? s
+  return false if s.nil? | s.empty?
+  
+  if (!!(s =~/[a-zA-Z]/))
+    if (!!(s =~ /(?:\d*)?\d+/))
+        return false
+    end
+  end
+    
+    
+    
+  s.to_i(2)%4==0 ? true : false
+  
+  
+  #s =~ /^[01]*1[01]*00$/
 end
 
 # Part 3
-
 class BookInStock
+   
   
-  attr_accessor :isbn
-  def initialize(isbn, price)
-    
+  
+  attr_accessor :isbn,:price
+  
+    # Criar o objecto
+  def initialize(isbn,price)
     @isbn = isbn
     @price = price
-  
+    raise ArgumentError.new("ISBN need to be specified") if isbn.empty?
+    raise ArgumentError.new("price can't be 0") if price < 1
   end
   
-  def price 
-    return @price
-  end
-  
-  def price=(price)
-    @price = price
-  end
-  
+   
   def price_as_string
     return "$%0.2f" % @price
   end
-  
+   
 end
