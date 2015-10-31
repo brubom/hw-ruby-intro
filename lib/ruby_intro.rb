@@ -49,12 +49,32 @@ def starts_with_consonant? s
 
 end
 
-def binary_multiple_of_4? s
-  s =~ /^[01]*1[01]*00$/
+def binary_multiple_of_4?(s)
+    s[/\A[01]+\Z/]  && (s.to_i(2)%4==0) ? true : false
 end
 
 # Part 3
 
 class BookInStock
-# YOUR CODE HERE
+  
+  attr_accessor :isbn
+  def initialize(isbn, price)
+    
+    @isbn = isbn
+    @price = price
+  
+  end
+  
+  def price 
+    return @price
+  end
+  
+  def price=(price)
+    @price = price
+  end
+  
+  def price_as_string
+    return "$%0.2f" % @price
+  end
+  
 end
